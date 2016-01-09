@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="data-events.js"></script>
+        <script>
+            //Bind events
+            $(document).ready(function () {
+
+                $('body').mousedown(function (e) {
+                    $('*').dataevent('activate', 'on');
+                });
+
+                $('body').mouseup(function (e) {
+                    $('*').dataevent('activate', 'off');
+                });
+                
+                $('body').mousemove(function (e) {
+                    $('*').dataevent('activateOther', ((e.pageX+e.pageY)%100)/100);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <svg height="400" width="400" data-AT>
+          <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" data-id@="circleA"
+                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"}}' /> <!-- Event und diskreter handler -->
+          <circle cx="120" cy="100" r="40" stroke="black" stroke-width="3" fill="blue" data-id@="circleB" data-@fill='{"id": "circleA", "attribute": "@fill"}' /> <!-- Referenz -->
+          <rect x="200" y="90" width="150" height="150" fill-opacity="0.1"
+                data-@fill-opacity='{"event": ["activate", "activateMore"], "handler": "function(event, val){return 0.8;}"}' />
+              <!-- Funktion als Handler und mehrere gebundene Events -->
+          <rect x="20" y="300" width="70" height="70" fill-opacity="0.9" data-@fill-opacity='{"event": "activateOther"}' />
+              <!-- Direkte Wertweitergabe, ohne Handler -->
+        </svg>
+    </body>
+</html>
