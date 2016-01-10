@@ -25,7 +25,7 @@ $('*').dataevent('eventName', 'eventValue');
 To bind a data-event to an attribute, add another attribute to the same dom object beginning with `data-@` followed by the attribute name. The value has to be a valid json and has to have one of the following formats.
 
 #### Direct value handler
-To assign the event value directly to the attribute when a event is triggered, define an object property with the key `"event"` and the event name as value.
+To assign the event value directly to the attribute when an event is triggered, define an object property with the key `"event"` and the event name as value.
 ```html
 <svg data-at>
   <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
