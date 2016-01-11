@@ -4,7 +4,7 @@
   "description": "Define event handlers for dom attributes inside html5 data attributes.",
   "main": "data-events.js",
   "scripts": {
-    "test": "grunt qunit
+    "test": "grunt travis --verbose"
   },
   "repository": {
     "type": "git",
