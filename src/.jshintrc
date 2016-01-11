@@ -1,0 +1,16 @@
+{   
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "unused": true,
+    "browser": true,
+    "evil": true,
+    "devel": true,
+    "predef": ["jQuery"]
+}
