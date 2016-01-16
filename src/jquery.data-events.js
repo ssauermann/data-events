@@ -214,7 +214,7 @@
     */
     $.fn.dataevent = function update( event, value ) {
 
-        this.find( "[data-AT]" ).each( function() {
+        this.find( "[data-at]" ).each( function() {
             var dom = $( this );
 
             executeEvent( resolveReference( getChildAttributes( dom ) ), event, value );

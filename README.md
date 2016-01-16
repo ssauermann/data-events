@@ -1,9 +1,15 @@
-# data-events
+# data-events [![Build Status](https://travis-ci.org/ssauermann/data-events.svg?branch=master)](https://travis-ci.org/ssauermann/data-events)
 Define event handlers for dom attributes inside html5 data attributes.
+
+## Getting started
+Download the [production version][min] or the [development version][max].
+
+[min]: https://raw.github.com/ssauermann/data-events/master/dist/jquery.data-events.min.js
+[max]: https://raw.github.com/ssauermann/data-events/master/dist/jquery.data-events.js
 
 ## How to use
 - include jQuery
-- include this script
+- include this plugin
 
 ### Basics
 First of all you have to add the attribute `data-at` to a dom object to create a group. All children of this dom object will be considered by the script and checked when a data-event update is triggered. [Cross references](#use-cross-references) only work within a group.
