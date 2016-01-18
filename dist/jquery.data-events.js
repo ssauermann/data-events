@@ -1,4 +1,4 @@
-/*! Data Events - v0.1.0 - 2016-01-12
+/*! Data Events - v0.1.0 - 2016-01-18
 * https://github.com/ssauermann/data-events
 * Copyright (c) 2016 S. Sauermann; Licensed MIT */
 ( function( $ ) {
@@ -217,7 +217,7 @@
     */
     $.fn.dataevent = function update( event, value ) {
 
-        this.find( "[data-AT]" ).each( function() {
+        this.find( "[data-at]" ).each( function() {
             var dom = $( this );
 
             executeEvent( resolveReference( getChildAttributes( dom ) ), event, value );
