@@ -210,11 +210,21 @@
     }
 
     /*
+    Default configuration of this plugin
+    */
+    $.fn.dataevent.defaults = {
+        selector: "[data-at]"
+    };
+
+    /*
     Update all dom elements which should be managed
     */
-    $.fn.dataevent = function update( event, value ) {
+    $.fn.dataevent = function( event, value, options ) {
 
-        this.find( "[data-at]" ).each( function() {
+        //Extending default options with provided ones
+        var opts = $.extend( {}, $.fn.dataevent.defaults, options );
+
+        this.find( opts.selector ).each( function() {
             var dom = $( this );
 
             executeEvent( resolveReference( getChildAttributes( dom ) ), event, value );
