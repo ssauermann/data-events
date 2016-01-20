@@ -1,6 +1,19 @@
 ( function( $ ) {
     "use strict";
-    var debug = false;
+
+    /*
+    Options for current call
+    */
+    var opts;
+
+    /*
+    Log if in debug mode
+    */
+    function log ( o ) {
+        if ( opts.debug ) {
+            console.log( o );
+        }
+    }
 
     /*
     Returns reference id of element
@@ -79,10 +92,8 @@
                 //Search for reference until finding a non reference
                     searchForReference = function( ref ) {
 
-                        if ( debug ) {
-                            console.log( "Resolving reference for: " );
-                            console.log( ref );
-                        }
+                        log( "Resolving reference for: " );
+                        log( ref );
 
                         //Filter valid references
                         var validIds = $.grep( childAttr, function( arry ) {
@@ -105,17 +116,15 @@
 
                         //Found another reference or am I done?
                         if ( typeof ( refAttribute.event ) !== "undefined" ) {
-                            if ( debug ) {
-                                console.log( "Resolved to: " );
-                                console.log( refAttribute );
-                            }
+
+                            log( "Resolved to: " );
+                            log( refAttribute );
+
                             return refAttribute;
                         }
 
                         //--> another reference
-                        if ( debug ) {
-                            console.log( refAttribute );
-                        }
+                        log( refAttribute );
 
                         //Test for cyclic dependencies
                         if ( $.inArray( refAttribute, cyclicTest ) ) {
@@ -143,13 +152,11 @@
     Handle an event and update the attribute with the calculated value
     */
     function handleEvent( dom, attributename, event, handler, value ) {
-        if ( debug ) {
-            console.log( "Handling event:" );
-            console.log( dom );
-            console.log( attributename );
-            console.log( handler );
-            console.log( value );
-        }
+        log( "Handling event:" );
+        log( dom );
+        log( attributename );
+        log( handler );
+        log( value );
 
         var resultValue;
 
@@ -173,11 +180,9 @@
     Execute an event with the given value on an dom element
     */
     function executeEvent( at, event, eventValue ) {
-        if ( debug ) {
-            console.log( "Executing event:" );
-            console.log( event );
-            console.log( eventValue );
-        }
+        log( "Executing event:" );
+        log( event );
+        log( eventValue );
 
         //Filter events from each object
         $.each( at, function( i, domAt ) {
@@ -210,19 +215,16 @@
     }
 
     /*
-    Default configuration of this plugin
-    */
-    $.fn.dataevent.defaults = {
-        selector: "[data-at]"
-    };
-
-    /*
     Update all dom elements which should be managed
     */
     $.fn.dataevent = function( event, value, options ) {
 
-        //Extending default options with provided ones
-        var opts = $.extend( {}, $.fn.dataevent.defaults, options );
+        //Extending default options with provided ones if necessary
+        if ( typeof( options ) !== "undefined" ) {
+            opts = $.extend( {}, $.fn.dataevent.defaults, options );
+        } else {
+            opts = $.fn.dataevent.defaults;
+        }
 
         this.find( opts.selector ).each( function() {
             var dom = $( this );
@@ -232,6 +234,14 @@
         } );
 
         return this;
+    };
+
+    /*
+    Default configuration of this plugin
+    */
+    $.fn.dataevent.defaults = {
+        selector: "[data-at]",
+        debug: false
     };
 
 }( jQuery ) );
