@@ -20,7 +20,7 @@
     data-id@='abc12' -> 'abc12'
     */
     function getDataId( e ) {
-        return e.data( "id@" );
+        return e.data( opts.refAttr );
     }
 
     /*
@@ -39,7 +39,7 @@
 
         //Filter data attributes for @ character
         $.each( dataDict, function( key ) {
-            if ( key.indexOf( "@" ) !== 0 ) {
+            if ( key.indexOf( opts.dataPrefix ) !== 0 ) {
                 delete dataDict[ key ];
             }
         } );
@@ -214,10 +214,11 @@
 
     }
 
-    /*
-    Update all dom elements which should be managed
-    */
-    $.fn.dataevent = function( event, value, options ) {
+    function executeEventCycle( at, event ) {
+        throw "not yet implemented: " + at + event;
+    }
+
+    function extendOptions( options ) {
 
         //Extending default options with provided ones if necessary
         if ( typeof( options ) !== "undefined" ) {
@@ -225,12 +226,42 @@
         } else {
             opts = $.fn.dataevent.defaults;
         }
+    }
+
+    /*
+    Update all dom elements which should be managed
+    */
+    $.fn.dataevent = function( event, value, options ) {
+
+        //Check for valid arguments
+        if ( typeof( event ) !== "string" ) {
+            throw "Event name has to be a String";
+        }
+
+        if ( typeof( value ) === "undefined" ) {
+            throw "An event value has to be supplied. To cycle through states use dataevent.next()";
+        }
+
+        extendOptions( options );
 
         this.find( opts.selector ).andSelf().each( function() {
-            var dom = $( this );
+            executeEvent( resolveReference( getChildAttributes( $( this ) ) ), event, value );
+        } );
 
-            executeEvent( resolveReference( getChildAttributes( dom ) ), event, value );
+        return this;
+    };
 
+    $.fn.dataevent.next = function( event, options ) {
+
+        //Check for valid arguments
+        if ( typeof( event ) !== "string" ) {
+            throw "Event name has to be a String";
+        }
+
+        extendOptions( options );
+
+        this.find( opts.selector ).andSelf().each( function() {
+            executeEventCycle( resolveReference( getChildAttributes( $( this ) ) ), event );
         } );
 
         return this;
@@ -241,6 +272,8 @@
     */
     $.fn.dataevent.defaults = {
         selector: "[data-at]",
+        dataPrefix: "@",
+        refAttr: "id@",
         debug: false
     };
 

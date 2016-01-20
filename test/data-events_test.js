@@ -85,4 +85,11 @@
               "value was set correctly for referencing circle" );
     } );
 
+    test( "expected exceptions for invalid arguments", function() {
+        throws( function() {$( "#chain" ).dataevent( "someevent" );},
+               "Exception: missing value" );
+        throws( function() {$( "#chain" ).dataevent( 15, "Hello" );},
+               "Exception: name is no string" );
+    } );
+
 }( jQuery ) );
