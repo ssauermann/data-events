@@ -1,32 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Data Events Test Suite</title>
-  <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
-  <script src="../libs/jquery-loader.js"></script>
-  <!-- Load local QUnit. -->
-  <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
-  <script src="../libs/qunit/qunit.js"></script>
-  <!-- Load local lib and tests. -->
-  <script src="../src/jquery.data-events.js"></script>
-  <script src="data-events_test.js"></script>
-  <!-- Removing access to jQuery and $. But it'll still be available as _$, if
+    <meta charset="utf-8">
+    <title>Data Events Test Suite</title>
+    <!-- Load local jQuery. This can be overridden with a ?jquery=___ param. -->
+    <script src="../libs/jquery-loader.js"></script>
+    <!-- Load local QUnit. -->
+    <link rel="stylesheet" href="../libs/qunit/qunit.css" media="screen">
+    <script src="../libs/qunit/qunit.js"></script>
+    <!-- Load local lib and tests. -->
+    <script src="../src/jquery.data-events.js"></script>
+    <script src="data-events_test.js"></script>
+    <!-- Removing access to jQuery and $. But it'll still be available as _$, if
        you REALLY want to mess around with jQuery in the console. REMEMBER WE
        ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
-  <script>window._$ = jQuery.noConflict(true);</script>
+    <script>window._$ = jQuery.noConflict(true);</script>
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture">
-        <svg height="400" width="400" data-AT>
-          <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" data-id@="circleA"
-                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"}}' />
-          <circle cx="120" cy="100" r="40" stroke="black" stroke-width="3" fill="blue" data-id@="circleB" data-@fill='{"id": "circleA", "attribute": "@fill"}' />
-          <rect x="200" y="90" width="150" height="150" fill-opacity="0.1"
-                data-@fill-opacity='{"event": ["activate", "activateMore"], "handler": "function(event, val){return 0.8;}"}' />
-          <rect x="20" y="300" width="70" height="70" fill-opacity="0.9" data-@fill-opacity='{"event": "activateOther"}' />
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        
+        <div id="chain">
+            <svg data-at>
+            </svg>
+        </div>
+        
+        <svg id="directAt" data-at>
+            <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
         </svg>
-  </div>
+        
+        <div id="parentAt">
+            <svg data-at>
+                <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
+            </svg>
+        </div>
+        
+        <svg id="directValueSvg" data-at>
+            <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
+        </svg>
+        
+        <svg id="discreteValueSvg" data-at>
+          <circle cx="50" cy="50" r="40" fill="blue"
+                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+          />
+        </svg>
+        
+        <svg id="functionalValueSvg" data-at>
+          <circle cx="50" cy="50" r="40" fill-opacity="1"
+                  data-@fill-opacity='{"event": "activate", "handler": "function(event, val){return (val%100)/100;}" }'
+          />
+        </svg>
+        
+        <svg id="multipleEventsSvg" data-at>
+          <circle cx="50" cy="50" r="40" data-@r='{"event": ["activate", "other"] }' />
+        </svg>
+        
+        <svg id="crossReferenceSvg" data-at>
+          <circle class="orig" cx="30" cy="30" r="20" fill="red" data-id@="circleA"
+                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+          />
+          <circle class="ref" cx="60" cy="30" r="20" fill="red"
+                  data-@fill='{"id": "circleA", "attribute": "@fill"}'
+          />
+        </svg>
+    </div>
 </body>
 </html>

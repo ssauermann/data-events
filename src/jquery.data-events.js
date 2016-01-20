@@ -56,7 +56,7 @@
 
         var arry = [];
 
-        e.find( "*" ).each( function() {
+        e.children().andSelf().each( function() {
             arry.push( [ $( this ), getAttributes( $( this ) ) ] );
         } );
 
@@ -226,7 +226,7 @@
             opts = $.fn.dataevent.defaults;
         }
 
-        this.find( opts.selector ).each( function() {
+        this.find( opts.selector ).andSelf().each( function() {
             var dom = $( this );
 
             executeEvent( resolveReference( getChildAttributes( dom ) ), event, value );
