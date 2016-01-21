@@ -1,5 +1,5 @@
 # data-events [![Build Status](https://travis-ci.org/ssauermann/data-events.svg?branch=master)](https://travis-ci.org/ssauermann/data-events)
-Define event handlers for dom attributes inside html5 data attributes.
+jQuery plugin for defining event handlers for dom attributes inside of html5 data attributes.
 
 ## Getting started
 Download the [production version][min] or the [development version][max].
@@ -84,11 +84,11 @@ To reduce code duplication you can refer to another data-event. On the dom objec
 $(document).ready(function () {
   
   $('body').mousedown(function (e) {
-      $('*').dataevent('activate', 'on');
+      $('svg').dataevent('activate', 'on');
   });
   
   $('body').mouseup(function (e) {
-      $('*').dataevent('activate', 'off');
+      $('svg').dataevent('activate', 'off');
   });
   
 });
