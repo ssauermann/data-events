@@ -1,4 +1,27 @@
 {
     "preset": "jquery",
-    "validateLineBreaks": null
+    "validateLineBreaks": null,
+    "jsDoc": {
+        "checkAnnotations": {
+            "preset": "jsdoc3",
+            "extra": {
+                "chainable": false
+            }
+        },
+        "checkTypes": "strictNativeCase",
+        "enforceExistence": "exceptExports",
+        "requireDescriptionCompleteSentence": true,
+        "requireParamDescription": true,
+        "requireReturnDescription": true,
+        "requireNewlineAfterDescription": true,
+        "requireHyphenBeforeDescription": true,
+        "checkRedundantAccess": true,
+        "requireReturnTypes": true,
+        "checkRedundantReturns": true,
+        "checkReturnTypes": true,
+        "checkRedundantParams": true,
+        "requireParamTypes": true,
+        "checkParamNames": true,
+        "checkParamExistence": true
+    }
 }

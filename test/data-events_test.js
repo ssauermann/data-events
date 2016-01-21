@@ -86,9 +86,9 @@
     } );
 
     test( "expected exceptions for invalid arguments", function() {
-        throws( function() {$( "#chain" ).dataevent( "someevent" );},
+        throws( function() {$( "#chain" ).dataevent( "someevent" );}, TypeError,
                "Exception: missing value" );
-        throws( function() {$( "#chain" ).dataevent( 15, "Hello" );},
+        throws( function() {$( "#chain" ).dataevent( 15, "Hello" );}, TypeError,
                "Exception: name is no string" );
     } );
 

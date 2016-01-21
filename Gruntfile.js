@@ -71,7 +71,19 @@ module.exports = function( grunt ) {
         gruntfile: [ "Gruntfile.js" ],
         src: [ "src/**/*.js" ],
         test: [ "test/**/*.js" ]
-    }
+    },
+	yuidoc: {
+		compile: {
+			name: "<%= pkg.name %>",
+			description: "<%= pkg.description %>",
+			version: "<%= pkg.version %>",
+			url: "<%= pkg.homepage %>",
+			options: {
+				paths: "./src",
+				outdir: "docs/api"
+			}
+		}
+	}
   } );
 
   // These plugins provide necessary tasks.
@@ -82,9 +94,11 @@ module.exports = function( grunt ) {
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
   grunt.loadNpmTasks( "grunt-contrib-watch" );
   grunt.loadNpmTasks( "grunt-jscs" );
+  grunt.loadNpmTasks( "grunt-contrib-yuidoc" );
 
   // Default task.
-  grunt.registerTask( "default", [ "jshint", "jscs", "qunit", "clean", "concat", "uglify" ] );
+  grunt.registerTask( "default", [ "jshint", "jscs", "qunit", "clean", "concat", "uglify",
+                                  "yuidoc" ] );
 
   //Travis CI task
   grunt.registerTask( "travis", [ "jshint", "jscs", "qunit" ] );

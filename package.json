@@ -1,7 +1,7 @@
 {
   "name": "data-events",
   "version": "0.1.0",
-  "description": "Define event handlers for dom attributes inside html5 data attributes.",
+  "description": "jQuery plugin for defining event handlers for dom attributes inside of html5 data attributes.",
   "main": "data-events.js",
   "scripts": {
     "test": "grunt travis --verbose"
@@ -32,7 +32,9 @@
     "grunt-contrib-qunit": "^0.7.0",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-jscs": "^2.6.0"
+    "grunt-contrib-yuidoc": "^0.10.0",
+    "grunt-jscs": "^2.6.0",
+    "yuidocjs": "^0.10.0"
   },
   "engines": {
     "node": ">= 0.10.0"

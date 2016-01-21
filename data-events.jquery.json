@@ -1,7 +1,7 @@
 {
   "name": "data-events",
   "title": "Data Events",
-  "description": "Define event handlers for dom attributes inside html5 data attributes.",
+  "description": "jQuery plugin for defining event handlers for dom attributes inside of html5 data attributes.",
   "version": "0.1.0",
   "homepage": "https://github.com/ssauermann/data-events",
   "author": {
