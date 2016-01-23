@@ -143,6 +143,23 @@
         );
     } );
 
+    test( "cross reference (short form)", function() {
+        ok(
+            dom.find( ".crossReferenceShortSvg" ).dataevent( "activate", "on" ),
+           "event is working"
+        );
+        equal(
+            dom.find( ".crossReferenceShortSvg .orig" ).attr( "fill" ),
+            "green",
+            "value was set correctly for original circle"
+        );
+        equal(
+            dom.find( ".crossReferenceShortSvg .ref" ).attr( "fill" ),
+            "green",
+            "value was set correctly for referencing circle"
+        );
+    } );
+
     test( "expected exceptions for invalid arguments", function() {
         throws(
             function() {

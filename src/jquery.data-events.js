@@ -89,6 +89,22 @@
     }
 
     /**
+    * Resolves a short form of a reference to the object form.
+    *
+    * @private
+    * @method resolveShortForm
+    * @param {string} short - Short form string
+    * @return {Object} - Object form or undefined if invalid
+    */
+    function resolveShortForm( short ) {
+        var split = short.split( opts.shortFormSeperator );
+        if ( split.length === 2 ) {
+            return { id: split[ 0 ], attribute: opts.dataPrefix + split[ 1 ] };
+        }
+        return undefined;
+    }
+
+    /**
     * Resolve cross references and validates structure
     *
     * @private
@@ -111,9 +127,20 @@
             $.each( attr, function( k, v ) {
 
                 if ( typeof ( v ) !== "object" ) {
-                    console.error( attr );
-                    throw "Format has to be: data-@name={event, handler}" +
-                        "or {id, attribute} for a reference'";
+                    var failure = true;
+                    if ( typeof ( v ) === "string" ) {
+
+                        //Shortform
+                        v = resolveShortForm( v );
+                        if ( typeof( v ) === "object" ) {
+                            failure = false;
+                        }
+                    }
+                    if ( failure ) {
+                        console.error( attr );
+                        throw "Format has to be: data-@name={event, handler}" +
+                            "or {id, attribute} for a reference'";
+                    }
                 }
 
                 var cyclicTest = [ v ],
@@ -385,6 +412,7 @@
         selector: "[data-at]",
         dataPrefix: "@",
         refAttr: "id@",
+        shortFormSeperator: "@",
         debug: false
     };
 

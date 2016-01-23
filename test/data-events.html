@@ -63,6 +63,15 @@
                       data-@fill='{"id": "circleA", "attribute": "@fill"}'
               />
             </svg>
+            
+            <svg class="crossReferenceShortSvg" data-at>
+              <circle class="orig" cx="30" cy="30" r="20" fill="red" data-id@="circleA"
+                      data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+              />
+              <circle class="ref" cx="60" cy="30" r="20" fill="red"
+                      data-@fill='circleA@fill'
+              />
+            </svg>
         </div>
         
         <div id="test-dataevent-next">
