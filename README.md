@@ -67,14 +67,16 @@ Instead of one, multiple data-events may be bound via an array of strings.
 ```
 
 #### Use cross-references
-To reduce code duplication you can refer to another data-event. On the dom object which will be referenced, the attribute `data-id@` has to be set. As reference use this id and a data attribute:
+To reduce code duplication you can refer to another data-event. On the dom object which will be referenced, the attribute `data-id@` has to be set. As reference use this id and a data attribute. These can be denoted as an object `{"id": "Foo", "attribute": "Bar"}` or in a short form `Foo@Bar`.
 ```html
 <svg data-at>
   <circle cx="30" cy="30" r="20" fill="red" data-id@="circleA"
           data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
   />
-  <circle cx="60" cy="30" r="20" fill="red"
+  <circle cx="55" cy="30" r="10" fill="red"
           data-@fill='{"id": "circleA", "attribute": "@fill"}'
+  <circle cx="70" cy="30" r="10" fill="red"
+          data-@fill='circleA@fill'
   />
 </svg>
 ```
@@ -91,7 +93,7 @@ Without an event value the referenced attribute will be treated as boolean. When
 ```
 
 #### Discrete value handler without event value
-Without an event value the discrete handler will cycle through the defined states in the same order as they are denoted in the handler object.
+Without an event value the discrete handler will cycle through the defined states in the same order as they are denoted in the handler object. If the current value doesn't match any handler state the first defined state will be used.
 ```html
 <svg data-at>
   <rect width="50" height="100"
