@@ -202,22 +202,89 @@
         log( handler );
         log( value );
 
-        var resultValue;
+        //Camel case format of jquery to dashed format helloWorld -> hello-world
+        var attribute = attributename.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase(),
+            resultValue;
 
-        if ( typeof ( handler ) === "object" ) {
-            resultValue = handler[ value ];
-        } else if ( typeof ( handler ) === "undefined" ) {
-            resultValue = value;
-        } else {
-            resultValue = eval( "(" + handler + ")" )( event, value );
+        //Handle with value
+        if ( typeof( value ) !== "undefined" ) {
+            if ( typeof ( handler ) === "object" ) {
+                resultValue = handler[ value ];
+            } else if ( typeof ( handler ) === "undefined" ) {
+                resultValue = value;
+            } else {
+                resultValue = eval( "(" + handler + ")" )
+                ( event,
+                 value,
+                 { name: attribute, value: dom.attr( attribute ) },
+                 dom
+                );
+            }
+        }else {
+
+            //Handle without value (permutation)
+            if ( typeof ( handler ) === "object" ) {
+                var myIndex = false,
+                    currentAttrValue = dom.attr( attribute ),
+                    firstValue;
+                $.each( handler, function( k, v ) {
+
+                    //Set the first value of this object as fallback
+                    if ( typeof( firstValue ) === "undefined" ) {
+                        firstValue = v;
+                    }
+
+                    //Am I the next value?
+                    if ( myIndex ) {
+
+                        //Found next
+                        resultValue = v;
+
+                        //Break each
+                        return false;
+                    }
+
+                    //Am I the current value
+                    if ( v === currentAttrValue ) {
+
+                        //Next element is the wanted one
+                        myIndex = true;
+                    }
+                } );
+
+                //Attribute is not set or set to the last value
+                if ( typeof( resultValue ) === "undefined" ) {
+                    resultValue = firstValue;
+                }
+            } else if ( typeof ( handler ) === "undefined" ) {
+
+                //Toggle attribute existence
+                if ( typeof( dom.attr( attribute ) ) !== "undefined" ) {
+                    dom.removeAttr( attribute );
+                } else {
+                    dom.attr( attribute, "" );
+                }
+
+                //Exit early because no value has to be set
+                return;
+
+            } else {
+
+                //Call the function without a value
+                resultValue = eval( "(" + handler + ")" )
+                ( event,
+                 undefined,
+                 { name: attribute, value: dom.attr( attribute ) },
+                 dom
+                );
+            }
         }
 
         if ( typeof ( resultValue ) === "undefined" ) {
             throw "Handler is invalid: " + handler;
         }
 
-        //Camel case format of jquery to dashed format helloWorld -> hello-world
-        dom.attr( attributename.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase(), resultValue );
+        dom.attr( attribute, resultValue );
     }
 
     /**
@@ -267,18 +334,6 @@
     }
 
     /**
-    * Not yet implemented.
-    *
-    * @private
-    * @method executeEventCycle
-    * @param {Object} at - jQuery dom to execute on
-    * @param {string} event - Name of the triggered event
-    */
-    function executeEventCycle( at, event ) {
-        throw "not yet implemented: " + at + event;
-    }
-
-    /**
     * Extends the default options with user defined ones for current method call.
     *
     * @private
@@ -311,41 +366,10 @@
             throw new TypeError( "Event name has to be a String" );
         }
 
-        if ( typeof( value ) === "undefined" ) {
-            throw new TypeError( "An event value has to be supplied." +
-                                "To cycle through states use dataevent.next()"
-                               );
-        }
-
         extendOptions( options );
 
         this.find( opts.selector ).andSelf().each( function() {
             executeEvent( resolveReference( getChildAttributes( $( this ) ) ), event, value );
-        } );
-
-        return this;
-    };
-
-    /**
-    * Switch a status of an handler to the next state.
-    *
-    * @chainable
-    * @method $.fn.dataevent.next
-    * @param {string} event - Name of the triggered event
-    * @param {Object} [options] - Overwrite default configuration
-    * @return {Object} description
-    */
-    $.fn.dataevent.next = function( event, options ) {
-
-        //Check for valid arguments
-        if ( typeof( event ) !== "string" ) {
-            throw new TypeError( "Event name has to be a String" );
-        }
-
-        extendOptions( options );
-
-        this.find( opts.selector ).andSelf().each( function() {
-            executeEventCycle( resolveReference( getChildAttributes( $( this ) ) ), event );
         } );
 
         return this;

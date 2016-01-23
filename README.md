@@ -49,7 +49,7 @@ To map the event value to specified values, define additionally to the `"event"`
 ```
 
 #### Functional value handler
-To do more complex calculations before assignment, you can add a function as the value of the `"handler"` property. Mask quotationmarks accordingly!
+To do more complex calculations before assignment, you can add a function as the value of the `"handler"` property. Mask quotationmarks accordingly! The passed parameter are the following: `(eventname, eventvalue, {name: "attributename", value: "currentAttributeValue"}, currentJQueryDomObject)`
 ```html
 <svg data-at>
   <circle cx="50" cy="50" r="40" fill-opacity="1"
@@ -75,6 +75,27 @@ To reduce code duplication you can refer to another data-event. On the dom objec
   />
   <circle cx="60" cy="30" r="20" fill="red"
           data-@fill='{"id": "circleA", "attribute": "@fill"}'
+  />
+</svg>
+```
+
+### Omitting the event value
+If the event value is omitted the functionality of the direct and the discrete value handlers changes to a toggle / permutation mode.
+
+#### Direct value handler without event value
+Without an event value the referenced attribute will be treated as boolean. When the event is triggered it will add or remove the attribute based on the current state.
+```html
+<svg data-at>
+    <p data-@hidden='{"event": "activate"}' >Foo bar</p>
+</svg>
+```
+
+#### Discrete value handler without event value
+Without an event value the discrete handler will cycle through the defined states in the same order as they are denoted in the handler object.
+```html
+<svg data-at>
+  <rect width="50" height="100"
+        data-@height='{"event": "activate", "handler": {"state0": "50", "state1": "100", "state2": "200"} }'
   />
 </svg>
 ```

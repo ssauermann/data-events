@@ -19,50 +19,75 @@
 <body>
     <div id="qunit"></div>
     <div id="qunit-fixture">
-        
-        <div id="chain">
-            <svg data-at>
-            </svg>
-        </div>
-        
-        <svg id="directAt" data-at>
-            <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
-        </svg>
-        
-        <div id="parentAt">
-            <svg data-at>
+        <div id="test-dataevent">
+            <div class="chain">
+                <svg data-at>
+                </svg>
+            </div>
+
+            <svg class="directAt" data-at>
                 <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
             </svg>
+
+            <div class="parentAt">
+                <svg data-at>
+                    <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
+                </svg>
+            </div>
+
+            <svg class="directValueSvg" data-at>
+                <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
+            </svg>
+
+            <svg class="discreteValueSvg" data-at>
+              <circle cx="50" cy="50" r="40" fill="blue"
+                      data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+              />
+            </svg>
+
+            <svg class="functionalValueSvg" data-at>
+              <circle cx="50" cy="50" r="40" fill-opacity="1"
+                      data-@fill-opacity='{"event": "activate", "handler": "function(event, val){return (val%100)/100;}" }'
+              />
+            </svg>
+
+            <svg class="multipleEventsSvg" data-at>
+              <circle cx="50" cy="50" r="40" data-@r='{"event": ["activate", "other"] }' />
+            </svg>
+
+            <svg class="crossReferenceSvg" data-at>
+              <circle class="orig" cx="30" cy="30" r="20" fill="red" data-id@="circleA"
+                      data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+              />
+              <circle class="ref" cx="60" cy="30" r="20" fill="red"
+                      data-@fill='{"id": "circleA", "attribute": "@fill"}'
+              />
+            </svg>
         </div>
         
-        <svg id="directValueSvg" data-at>
-            <circle cx="50" cy="50" r="40" data-@r='{"event": "activate"}' />
-        </svg>
-        
-        <svg id="discreteValueSvg" data-at>
-          <circle cx="50" cy="50" r="40" fill="blue"
-                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
-          />
-        </svg>
-        
-        <svg id="functionalValueSvg" data-at>
-          <circle cx="50" cy="50" r="40" fill-opacity="1"
-                  data-@fill-opacity='{"event": "activate", "handler": "function(event, val){return (val%100)/100;}" }'
-          />
-        </svg>
-        
-        <svg id="multipleEventsSvg" data-at>
-          <circle cx="50" cy="50" r="40" data-@r='{"event": ["activate", "other"] }' />
-        </svg>
-        
-        <svg id="crossReferenceSvg" data-at>
-          <circle class="orig" cx="30" cy="30" r="20" fill="red" data-id@="circleA"
-                  data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
-          />
-          <circle class="ref" cx="60" cy="30" r="20" fill="red"
-                  data-@fill='{"id": "circleA", "attribute": "@fill"}'
-          />
-        </svg>
+        <div id="test-dataevent-next">
+            <div class="chain">
+                <svg data-at>
+                </svg>
+            </div>
+
+            <svg class="directValueSvg" data-at>
+                <circle cx="50" cy="50" r="20" data-@hidden='{"event": "activate"}' />
+            </svg>
+
+            <svg class="discreteValueSvg" data-at>
+              <circle cx="50" cy="50" r="40" fill="blue"
+                      data-@fill='{"event": "activate", "handler": {"on": "green", "off": "red"} }'
+              />
+            </svg>
+
+            <svg class="functionalValueSvg" data-at>
+              <circle cx="50" cy="50" r="40" fill-opacity="0.2"
+                      data-@fill-opacity='{"event": "activate", "handler": "function(event, none, att){return ((parseFloat(att.value)*100)+10)/100;}" }'
+              />
+            </svg>
+
+        </div>
     </div>
 </body>
 </html>
